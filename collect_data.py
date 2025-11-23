@@ -71,7 +71,12 @@ def save_to_turso(device_name, temperature):
     )
 
     conn.commit()
-    print(f"✓ データを保存しました: {timestamp} | {device_name} | {temperature}°C")
+
+    # データが正しく挿入されたか確認
+    cursor.execute("SELECT COUNT(*) FROM temperature_logs WHERE timestamp = ?", (timestamp,))
+    count = cursor.fetchone()[0]
+
+    print(f"✓ データを保存しました: {timestamp} | {device_name} | {temperature}°C (確認: {count}件)")
 
     # クライアントをクローズ
     conn.close()
