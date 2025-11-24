@@ -1,3 +1,5 @@
+# pyproject.toml
+# Packaging metadata for 21_home_temp. uv relies on this file to lock deps.
 [project]
 name = "21-home-temp"
 version = "0.1.0"

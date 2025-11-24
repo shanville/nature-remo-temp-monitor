@@ -1,6 +1,14 @@
+"""
+main.py
+手動デバッグ用に Nature Remo デバイスの最新値を一覧表示するスクリプト。
+データ収集が失敗した際の診断チェックとして利用する。
+"""
+
 import os
 import requests
 from dotenv import load_dotenv
+
+from config import DEFAULT_DEVICE_ENDPOINT, REQUEST_TIMEOUT_SECONDS
 
 def main():
     # .envファイルから環境変数を読み込む
@@ -14,7 +22,7 @@ def main():
         return
 
     # Nature Remo APIのエンドポイント
-    url = "https://api.nature.global/1/devices"
+    url = DEFAULT_DEVICE_ENDPOINT
 
     # リクエストヘッダー（認証情報を含む）
     headers = {
@@ -23,7 +31,7 @@ def main():
 
     try:
         # APIリクエストを送信
-        response = requests.get(url, headers=headers)
+        response = requests.get(url, headers=headers, timeout=REQUEST_TIMEOUT_SECONDS)
 
         # ステータスコードをチェック
         response.raise_for_status()
